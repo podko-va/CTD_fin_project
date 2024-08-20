@@ -6,6 +6,7 @@ const auth = (req,res,next) =>{
     //check header
     const authHeader = req.headers.authorization
     if (!authHeader || !authHeader.startsWith('Bearer')){
+        console.log('auth_middleware_Bearer.js')
         throw new UnauthenticatedError('Authentification invalid')
     }
     const token = authHeader.split(' ')[1]
@@ -16,6 +17,7 @@ const auth = (req,res,next) =>{
     req.user = {userId:payload.userId, name:payload.name}
     next()
  } catch (error) {
+    console.log('auth_middleware.js')
     throw new UnauthenticatedError('Authentification invalid')  
  }
 }

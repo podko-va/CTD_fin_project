@@ -1,4 +1,4 @@
-const Appointment = require('../models/Class')
+const Appointment = require('../models/Appointment')
 const {StatusCodes} = require('http-status-codes')
 const {BadRequestError, NotFoundError} = require('../errors')
 

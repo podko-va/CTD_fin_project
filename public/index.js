@@ -26,22 +26,28 @@ export const setToken = (value) => {
 
 export let message = null;
 
-import { showJobs, handleJobs } from "./jobs.js";
+// import { showJobs, handleJobs } from "./jobs.js";
+// import { showLoginRegister, handleLoginRegister } from "./loginRegister.js";
+// import { handleLogin } from "./login.js";
+// import { handleAddEdit } from "./addEdit.js";
+// import { handleRegister } from "./register.js";
+import { showAppointments, handleAppointments } from "./appointments.js";
 import { showLoginRegister, handleLoginRegister } from "./loginRegister.js";
 import { handleLogin } from "./login.js";
-import { handleAddEdit } from "./addEdit.js";
+import { handleAddEditAppointment } from "./addEditAppointment.js";
 import { handleRegister } from "./register.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   token = localStorage.getItem("token");
   message = document.getElementById("message");
   handleLoginRegister();
   handleLogin();
-  handleJobs();
+  handleAppointments();
   handleRegister();
-  handleAddEdit();
+  handleAddEditAppointment();
   if (token) {
-    showJobs();
+    showAppointments();
   } else {
     showLoginRegister();
   }

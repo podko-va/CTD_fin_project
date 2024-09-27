@@ -26,15 +26,19 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false, // true for psychologists
     },
+    isCoordinator: {
+        type: Boolean,
+        default: false, // true for coordinator
+    },
     timezone: {
         type: String,
-        required: [true, 'Please provide your timezone'],
-        enum: ['PDT', 'CET', 'EDT', 'UTC', 'GMT', 'EST', 'IST', 'CST'], // example timezone options
+        required: [false, 'Please provide your timezone'],
+        enum: ['PDT', 'CET', 'EDT', 'UTC', 'GMT', 'EST', 'IST', 'CST'], 
     },
     gender: {
         type: String,
         required: [true, 'Please provide gender'],
-        enum: ['female', 'male'],
+        enum: ['female', 'male', 'unspecified'],
     }
 });
 

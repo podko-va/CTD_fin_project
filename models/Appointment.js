@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const classSchema = new mongoose.Schema({
+const AppointmentSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: [true, 'Please provide a consultation date'],
@@ -22,7 +22,7 @@ const classSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: [true, 'Please provide a link to the consultation'],
+        required: [false, 'Please provide a link to the consultation'],
     },
     reserved: {
         type: Boolean,
@@ -44,6 +44,10 @@ const classSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
+    comments: {
+        type: String,
+        default: '',
+    },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Class', classSchema);
+module.exports = mongoose.model('Appointment', AppointmentSchema);

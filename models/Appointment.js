@@ -7,13 +7,13 @@ const AppointmentSchema = new mongoose.Schema({
     },
     timezone: {
         type: String,
-        required: [true, 'Please provide the timezone'],
+        required: [false, 'Please provide the timezone'],
         enum: ['PDT', 'CET', 'EDT', 'UTC', 'GMT', 'EST', 'IST', 'CST'], // example timezone options
     },
     patient: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
-        required: [true, 'Please provide the patient'],
+        required: [false, 'Please provide the patient'],
     },
     psychologist: {
         type: mongoose.Types.ObjectId,

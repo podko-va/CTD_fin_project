@@ -3,6 +3,7 @@ import { showAppointments } from "./appointments.js";
 
 export const deleteAppointment = async (appointmentId) => {
   try {
+    console.log(appointmentId);
     const response = await fetch(`/api/v1/appointments/${appointmentId}`, {
       method: "DELETE",
       headers: {

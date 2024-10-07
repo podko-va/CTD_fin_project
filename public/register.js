@@ -7,13 +7,15 @@ import {
     setToken,
   } from "./index.js";
   import { showLoginRegister } from "./loginRegister.js";
-  import { showJobs } from "./jobs.js";
+  import { showAppointments } from "./appointments.js";
   
   let registerDiv = null;
   let name = null;
   let email1 = null;
   let password1 = null;
   let password2 = null;
+  let timezone = null;
+  let gender = null;
   
   export const handleRegister = () => {
     registerDiv = document.getElementById("register-div");
@@ -21,6 +23,8 @@ import {
     email1 = document.getElementById("email1");
     password1 = document.getElementById("password1");
     password2 = document.getElementById("password2");
+    timezone = document.getElementById("timezone");
+    gender = document.getElementById("gender");
     const registerButton = document.getElementById("register-button");
     const registerCancel = document.getElementById("register-cancel");
   
@@ -42,6 +46,8 @@ import {
                   name: name.value,
                   email: email1.value,
                   password: password1.value,
+                  timezone: timezone.value,
+                  gender: gender.value,
                 }),
               });
   
@@ -54,8 +60,10 @@ import {
                 email1.value = "";
                 password1.value = "";
                 password2.value = "";
+                timezone.value = "";
+                gender.value = "";
   
-                showJobs();
+                showAppointments();
               } else {
                 message.textContent = data.msg;
               }
@@ -71,6 +79,8 @@ import {
           email1.value = "";
           password1.value = "";
           password2.value = "";
+          timezone.value = "";
+          gender.value = "";
           showLoginRegister();
         }
       }
@@ -81,5 +91,7 @@ import {
     email1.value = null;
     password1.value = null;
     password2.value = null;
+    timezone.value = null;
+    gender.value = null;
     setDiv(registerDiv);
   };

@@ -3,14 +3,14 @@ const {StatusCodes} = require('http-status-codes')
 const {BadRequestError, NotFoundError} = require('../errors')
 
 const getAllAppointments = async (req,res) => {
-    const appointments = await Appointment.find({createdBy:req.user.userId}).sort('createdAt')
+    const appointments = await Appointment.find({psychologist:req.user.userId})
     res.status(StatusCodes.OK).json({appointments, count: appointments.length})
 }
 
 const getAppointment = async (req,res) => {
     const {user:{userId}, params:{id:appointmentId}} = req
     const appointment = await Appointment.findOne({
-        _id:appointmentId, createdBy:userId
+        _id:appointmentId, psychologist:userId
     })
     console.log(appointment)
     if (!appointment) {
@@ -20,27 +20,25 @@ const getAppointment = async (req,res) => {
 }
 
 const createAppointment = async (req,res) => {
-    req.body.createdBy = req.user.userId
+    req.body.psychologist = req.user.userId
     const appointment = await Appointment.create(req.body)
     res.status(StatusCodes.CREATED).json({appointment})
 }
 
 const updateAppointment = async (req,res) => {
     const {
-        body:{company,position},
-        user:{userId}, 
+        body:{date,timezone,psychologist,description},
         params:{id:appointmentId}
     } = req
     
-    if (company === '' || position === ''){
-        throw new BadRequestError(`Company or position must not be empty`)
+    if (date === '' || timezone === ''){
+        throw new BadRequestError(`Date must not be empty`)
     }
     const appointment = await Appointment.findOneAndUpdate(
-        {_id:appointmentId, createdBy:userId},
-        {company,position},
+        {_id:appointmentId, psychologist:psychologist},
+        {date,timezone,description},
         {new: true, runValidators: true}
     )
-    console.log(appointment)
     if (!appointment) {
         throw new NotFoundError(`No appointment with id ${appointmentId}`)
     }
@@ -54,7 +52,7 @@ const deleteAppointment = async (req,res) => {
     } = req
     
     const appointment = await Appointment.findOneAndRemove(
-        {_id:appointmentId, createdBy:userId},
+        {_id:appointmentId, psychologist:userId},
     )
     console.log(appointment)
     if (!appointment) {

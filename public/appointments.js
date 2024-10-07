@@ -56,7 +56,6 @@ import {
   
       const data = await response.json();
       let children = [appointmentsTableHeader];
-  
       if (response.status === 200) {
         if (data.count === 0) {
           appointmentsTable.replaceChildren(...children); // clear this for safety
@@ -67,11 +66,11 @@ import {
             let editButton = `<td><button type="button" class="editButton" data-id=${data.appointments[i]._id}>edit</button></td>`;
             let deleteButton = `<td><button type="button" class="deleteButton" data-id=${data.appointments[i]._id}>delete</button></td>`;
             let rowHTML = `
-              <td>${new Date(data.appointments[i].date).toLocaleString()}</td>
-              <td>${data.appointments[i].patient}</td>
-              <td>${data.appointments[i].psychologist}</td>
+              <td>${new Date(data.appointments[i].date).toLocaleDateString(undefined, { timeZone: "UTC" })}</td>
+              <td>${new Date(data.appointments[i].date).toTimeString().slice(0, 8)}</td>              
+              <td>${data.appointments[i].patient||""}</td>
+              <td>${data.appointments[i].psychologist.name}</td>
               <td>${data.appointments[i].status || 'N/A'}</td>
-              <td>${data.appointments[i].timezone}</td>
               <div>${editButton}${deleteButton}</div>`;
   
             rowEntry.innerHTML = rowHTML;

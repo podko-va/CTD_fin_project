@@ -49,12 +49,25 @@ userSchema.pre('save', async function()
 })
 
 userSchema.methods.createJWT = function () {
-    return jwt.sign({userId:this._id, name:this.name},'jwtSecret',{expiresIn: process.env.JWT_LIFETIME})
+    return jwt.sign({userId:this._id, name:this.name},process.env.JWT_Secret,{expiresIn: process.env.JWT_LIFETIME})
 }
 
 userSchema.methods.comparePassword = async function (canditatePassword) {
     const isMatch = await bcrypt.compare(canditatePassword, this.password)
     return isMatch
   }
+
+userSchema.statics.decodeJWT = function (token) {
+    try {
+      const decoded = jwt.verify(token.token, process.env.JWT_Secret); // желательно заменить на переменную окружения process.env.JWT_SECRET
+      return {
+        userId: decoded.userId,
+        name: decoded.name
+      };
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  };
 
 module.exports = mongoose.model('User_FP', userSchema)

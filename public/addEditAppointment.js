@@ -3,6 +3,7 @@ import { showAppointments } from "./appointments.js";
 
 let addEditDiv = null;
 let appointmentDate = null;
+let appointmentTime = null;
 let timezone = null;
 let psychologist = null;
 let patient = null;
@@ -12,6 +13,7 @@ let addingAppointment = null;
 export const handleAddEditAppointment = () => {
   addEditDiv = document.getElementById("edit-appointment");
   appointmentDate = document.getElementById("date");
+  appointmentTime = document.getElementById("time");
   timezone = document.getElementById("timezone");
   psychologist = document.getElementById("psychologist");
   patient = document.getElementById("patient");
@@ -19,11 +21,28 @@ export const handleAddEditAppointment = () => {
   addingAppointment = document.getElementById("adding-appointment");
   const editCancel = document.getElementById("edit-cancel");
 
+  
   addEditDiv.addEventListener("click", async (e) => {
     if (inputEnabled && e.target.nodeName === "BUTTON") {
       if (e.target === addingAppointment) {
         enableInput(false);
-
+        //get user data
+        const response = await fetch('/api/v1/auth/decode', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            token:{ token }
+        })});
+        const decodedUser = await response.json();
+        if (decodedUser) {
+            console.log(`User ID: ${decodedUser.userId}, Name: ${decodedUser.name}`);
+          } else {
+            console.log('Invalid or expired token.');
+          }
+        
         let method = "POST";
         let url = "/api/v1/appointments";
 
@@ -40,14 +59,15 @@ export const handleAddEditAppointment = () => {
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-              date: appointmentDate.value,
+              date: combineDateAndTime(appointmentDate.value,appointmentTime.value),
               timezone: timezone.value,
-              psychologist: psychologist.value,
-              patient: patient.value,
+              patient: patient.value || null,
+              psychologist: decodedUser.userId,
               description: description.value,
             }),
           });
-
+          console.log(combineDateAndTime(appointmentDate.value,appointmentTime.value));
+          console.log(appointmentDate.value);
           const data = await response.json();
           if (response.status === 200 || response.status === 201) {
             if (response.status === 200) {
@@ -57,7 +77,8 @@ export const handleAddEditAppointment = () => {
             }
 
             appointmentDate.value = "";
-            timezone.value = "UTC"; // Reset to default or your preferred timezone
+            appointmentTime.value = "";
+            timezone.value = "UTC"; // Reset to default 
             psychologist.value = "";
             patient.value = "";
             description.value = "";
@@ -83,6 +104,7 @@ export const handleAddEditAppointment = () => {
 export const showAddEditAppointment = async (appointmentId) => {
   if (!appointmentId) {
     appointmentDate.value = "";
+    appointmentTime.value = "";
     timezone.value = "UTC";
     psychologist.value = "";
     patient.value = "";
@@ -105,10 +127,11 @@ export const showAddEditAppointment = async (appointmentId) => {
 
       const data = await response.json();
       if (response.status === 200) {
-        appointmentDate.value = new Date(data.appointment.date).toISOString().substring(0, 16); // Convert to a datetime-local input
+        appointmentDate.value = new Date(data.appointment.date).toISOString().slice(0, 10);
+        appointmentTime.value = new Date(data.appointment.date).toTimeString().slice(0,5);
         timezone.value = data.appointment.timezone;
-        psychologist.value = data.appointment.psychologist._id;
-        patient.value = data.appointment.patient._id;
+        psychologist.value = data.appointment.psychologist;
+        patient.value = "";
         description.value = data.appointment.description || "";
         addingAppointment.textContent = "update";
         message.textContent = "";
@@ -127,4 +150,14 @@ export const showAddEditAppointment = async (appointmentId) => {
 
     enableInput(true);
   }
+};
+
+function combineDateAndTime(dateValue, timeValue) {
+  const dateObj = new Date(dateValue);
+  const [hours, minutes] = timeValue.split(':');
+  
+  dateObj.setHours(parseInt(hours, 10));
+  dateObj.setMinutes(parseInt(minutes, 10));
+  
+  return dateObj.toISOString();
 };

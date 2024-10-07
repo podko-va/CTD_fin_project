@@ -1,10 +1,12 @@
 let activeDiv = null;
 export const setDiv = (newDiv) => {
   if (newDiv != activeDiv) {
-    if (activeDiv) {
+    if (activeDiv && activeDiv.style) {
       activeDiv.style.display = "none";
     }
-    newDiv.style.display = "block";
+    if (newDiv && newDiv.style) {
+      newDiv.style.display = "block";
+    }
     activeDiv = newDiv;
   }
 };

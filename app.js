@@ -44,7 +44,9 @@ app.use(xss());
 });*/
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(express.static("public"));
-
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'about.html'));
+});
 // extra packages
 
 // routes

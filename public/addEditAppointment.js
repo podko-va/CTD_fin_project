@@ -1,4 +1,4 @@
-import { enableInput, inputEnabled, message, setDiv, token } from "./index.js";
+import { enableInput, inputEnabled, message, setDiv, token, isPsychologist } from "./index.js";
 import { showAppointments } from "./appointments.js";
 
 let addEditDiv = null;
@@ -39,6 +39,7 @@ export const handleAddEditAppointment = () => {
         const decodedUser = await response.json();
         if (decodedUser) {
             console.log(`User ID: ${decodedUser.userId}, Name: ${decodedUser.name}`);
+            //console.log(decodedUser.isPsychologist);
           } else {
             console.log('Invalid or expired token.');
           }

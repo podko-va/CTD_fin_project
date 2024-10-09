@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     },
     isPsychologist: {
         type: Boolean,
-        default: false, // true for psychologists
+        default: true, // true for psychologists
     },
     isCoordinator: {
         type: Boolean,
@@ -49,7 +49,7 @@ userSchema.pre('save', async function()
 })
 
 userSchema.methods.createJWT = function () {
-    return jwt.sign({userId:this._id, name:this.name},process.env.JWT_Secret,{expiresIn: process.env.JWT_LIFETIME})
+    return jwt.sign({userId:this._id, name:this.name, isPsychologist:this.isPsychologist},process.env.JWT_Secret,{expiresIn: process.env.JWT_LIFETIME})
 }
 
 userSchema.methods.comparePassword = async function (canditatePassword) {
@@ -59,10 +59,11 @@ userSchema.methods.comparePassword = async function (canditatePassword) {
 
 userSchema.statics.decodeJWT = function (token) {
     try {
-      const decoded = jwt.verify(token.token, process.env.JWT_Secret); // желательно заменить на переменную окружения process.env.JWT_SECRET
+      const decoded = jwt.verify(token.token, process.env.JWT_Secret); 
       return {
         userId: decoded.userId,
-        name: decoded.name
+        name: decoded.name,
+        isPsychologist: decoded.isPsychologist
       };
     } catch (error) {
       console.error('Error decoding token:', error);

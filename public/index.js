@@ -16,11 +16,24 @@ export const enableInput = (state) => {
   inputEnabled = state;
 };
 
+function parseJwt(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+}
+
 export let token = null;
+export let isPsychologist = false;
 export const setToken = (value) => {
   token = value;
   if (value) {
     localStorage.setItem("token", value);
+    const decoded = parseJwt(token);
+    localStorage.setItem("isPsychologist",decoded.isPsychologist);
   } else {
     localStorage.removeItem("token");
   }
@@ -34,7 +47,7 @@ export let message = null;
 // import { handleAddEdit } from "./addEdit.js";
 // import { handleRegister } from "./register.js";
 import { showAppointments, handleAppointments } from "./appointments.js";
-import { showLoginRegister, handleLoginRegister } from "./loginRegister.js";
+import { showLoginRegister, handleLoginRegister, showLoginIni, handleLoginRegisterIni } from "./loginRegister.js";
 import { handleLogin } from "./login.js";
 import { handleAddEditAppointment } from "./addEditAppointment.js";
 import { handleRegister } from "./register.js";
@@ -42,7 +55,9 @@ import { handleRegister } from "./register.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   token = localStorage.getItem("token");
+  isPsychologist = localStorage.getItem("isPsychologist");
   message = document.getElementById("message");
+  handleLoginRegisterIni();
   handleLoginRegister();
   handleLogin();
   handleAppointments();
@@ -51,6 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (token) {
     showAppointments();
   } else {
-    showLoginRegister();
+    showLoginIni();
   }
 });

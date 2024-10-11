@@ -8,12 +8,11 @@ let loginRegisterIni = null;
 export const handleLoginRegisterIni = () => {
   loginRegisterIni = document.getElementById("about");
   const letsTry = document.getElementById("letsTry");
-  loginRegisterIni.addEventListener("click", (e) => {
-    if (inputEnabled && e.target.nodeName === "BUTTON") {
-      if (e.target === letsTry) {
+  letsTry.addEventListener("click", (e) => {
+    if (inputEnabled)  {
         showLoginRegister();
       }
-    }});
+    });
 };
 
 export const handleLoginRegister = () => {
@@ -21,7 +20,6 @@ export const handleLoginRegister = () => {
   const login = document.getElementById("logon");
   const register = document.getElementById("register");
   const register_p = document.getElementById("register_psychologist");
-
   loginRegisterDiv.addEventListener("click", (e) => {
     if (inputEnabled && e.target.nodeName === "BUTTON") {
       if (e.target === login) {

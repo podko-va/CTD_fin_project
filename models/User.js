@@ -69,6 +69,7 @@ userSchema.statics.decodeJWT = function (token) {
       console.error('Error decoding token:', error);
       return null;
     }
+    
   };
 
 module.exports = mongoose.model('User_FP', userSchema)

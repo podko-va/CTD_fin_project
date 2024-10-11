@@ -1,10 +1,13 @@
 const Appointment = require('../models/Appointment')
 const {StatusCodes} = require('http-status-codes')
 const {BadRequestError, NotFoundError} = require('../errors')
+const { closestTo } = require('date-fns')
 
 const getAllAppointments = async (req,res) => {
-    const appointments = await Appointment.find({psychologist:req.user.userId})
-    res.status(StatusCodes.OK).json({appointments, count: appointments.length})
+    const appointments = await Appointment.find(
+        req.user.isPsychologist ? { psychologist: req.user.userId } : { patient: req.user.userId }
+      );
+      res.status(StatusCodes.OK).json({appointments, count: appointments.length})
 }
 
 const getAppointment = async (req,res) => {

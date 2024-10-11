@@ -46,7 +46,7 @@ import {
   export const showAppointments = async () => {
     try {
       enableInput(false);
-  
+      
       const response = await fetch("/api/v1/appointments", {
         method: "GET",
         headers: {
@@ -70,13 +70,12 @@ import {
             let editButton = `<td><button type="button" class="editButton" data-id=${data.appointments[i]._id}>edit</button></td>`;
             let deleteButton = `<td><button type="button" class="deleteButton" data-id=${data.appointments[i]._id}>delete</button></td>`;
             let rowHTML = `
-              <td>${new Date(data.appointments[i].date).toLocaleDateString(undefined, { timeZone: "UTC" })}</td>
-              <td>${new Date(data.appointments[i].date).toTimeString().slice(0, 8)}</td>              
-              <td>${data.appointments[i].patient||""}</td>
-              ${!isPsychologist ? `<td>${data.appointments[i].psychologist.name}</td>` : ''}
-              <td>${data.appointments[i].status || 'N/A'}</td>
-              <div>${editButton}${deleteButton}</div>`;
-  
+            <td>${new Date(data.appointments[i].date).toLocaleDateString(undefined, { timeZone: "UTC" })}</td>
+            <td>${new Date(data.appointments[i].date).toTimeString().slice(0, 8)}</td>
+            ${isPsychologist ? `<td>${data.appointments[i].patient || ""}</td>` : ``} 
+            ${isPsychologist ? `` : `<td>${data.appointments[i].psychologist.name || ""}</td>`}
+            <td>${data.appointments[i].status || 'N/A'}</td>
+            <div>${editButton}${deleteButton}</div>`;
             rowEntry.innerHTML = rowHTML;
             children.push(rowEntry);
           }

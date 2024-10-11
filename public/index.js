@@ -33,6 +33,7 @@ export const setToken = (value) => {
   if (value) {
     localStorage.setItem("token", value);
     const decoded = parseJwt(token);
+    isPsychologist = decoded.isPsychologist
     localStorage.setItem("isPsychologist",decoded.isPsychologist);
   } else {
     localStorage.removeItem("token");

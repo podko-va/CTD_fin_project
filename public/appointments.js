@@ -14,7 +14,7 @@ import {
   let appointmentsDiv = null;
   let appointmentsTable = null;
   let appointmentsTableHeader = null;
-  
+    
   export const handleAppointments = () => {
     appointmentsDiv = document.getElementById("appointments");
     const logoff = document.getElementById("logoff");
@@ -44,9 +44,9 @@ import {
   };
   
   export const showAppointments = async () => {
+    const addAppointment = document.getElementById("add-appointment");    
     try {
       enableInput(false);
-      
       const response = await fetch("/api/v1/appointments", {
         method: "GET",
         headers: {
@@ -65,6 +65,22 @@ import {
           appointmentsTable.style.display = 'none'; 
           message.textContent = "No appointments found."; 
         } else {
+          // var thirdHeader = appointmentsTableHeader.getElementsByTagName("th")[2];
+          // if (isPsychologist) {
+          // thirdHeader.textContent = "Patient";
+          // } else {
+          // thirdHeader.textContent = "Psychologist";
+          // }
+          if (!isPsychologist) {
+            appointmentsTableHeader.innerHTML = `
+            <th>Date</th>
+            <th>Time</th>
+            <th>Psychologist</th>
+            <th>Status</th>
+            `;            
+            children = [appointmentsTableHeader];
+            addAppointment.style.display = 'none';
+          }
           for (let i = 0; i < data.appointments.length; i++) {
             let rowEntry = document.createElement("tr");  
             let editButton = `<td><button type="button" class="editButton" data-id=${data.appointments[i]._id}>edit</button></td>`;
@@ -75,11 +91,12 @@ import {
             ${isPsychologist ? `<td>${data.appointments[i].patient || ""}</td>` : ``} 
             ${isPsychologist ? `` : `<td>${data.appointments[i].psychologist.name || ""}</td>`}
             <td>${data.appointments[i].status || 'N/A'}</td>
-            <div>${editButton}${deleteButton}</div>`;
+            ${isPsychologist ? `<div>${editButton}${deleteButton}</div>` : ``}`
             rowEntry.innerHTML = rowHTML;
             children.push(rowEntry);
-          }
+          }          
           appointmentsTable.replaceChildren(...children);
+          console.log(isPsychologist);          
         }
       } else {
         message.textContent = data.msg;

@@ -15,7 +15,6 @@
               <button id="letsTry">Let`s Try!</button>
           </nav>
       </header>
-      <p id="message"></p>
         <h1 style="margin-left: 150px;margin-top: 50px;">
         WarmEmbrace:<br>
         <span style="margin-left: 150px;">Peaceful Pathways to Harmony.</span>
@@ -120,7 +119,7 @@
             <option value="unspecified">prefer not to specify</option>
           </select>
         </div>
-        <div>
+        <div style="display: none;">
           <input type="checkbox" id="isPsychologist" />
           <label for="isPsychologist">Are you a psychologist?</label>
         </div>
@@ -138,6 +137,7 @@
           <th>Patient</th>
           <th>Status</th>
           <th colspan="2"></th>
+          <th colspan="3"></th>
         </tr>
       </table>
       <button type="button" id="add-appointment">Add Appointment</button>
@@ -186,6 +186,7 @@
     </div>
     <script src="./index.js" type="module"></script>
     <footer>
+      <p id="message"></p> 
       <p>&copy; 2024 Kate Po. All rights reserved.</p>
     </footer>
   </body>

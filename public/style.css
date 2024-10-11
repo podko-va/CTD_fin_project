@@ -1,0 +1,289 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; 
+    width: 100vw; 
+    
+}
+header {
+    background-color: #f1f7f1;
+    padding: 20px 10px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 50px;
+}
+header nav {
+    margin-left: 20px;
+}
+#letsTry {
+    background-color: #d3e5d5; /* Спокойный цвет фона кнопки */
+    color: #333; /* Цвет текста кнопки */
+    border: 2px solid #a0bda0; /* Убираем рамку */
+    padding: 10px 20px; /* Внутренние отступы кнопки */
+    font-size: 16px; /* Размер шрифта */
+    font-weight: bold; /* Жирный шрифт */
+    border-radius: 5px; /* Закругление углов кнопки */
+    cursor: pointer; /* Курсор в виде указателя при наведении */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
+    width: 200px; /* Ширина кнопки */
+    margin: 10px 0; /* Отступы сверху и снизу */
+}
+nav a {
+    margin: 0 10px;
+    padding: 20px;
+    text-decoration: none;
+    background-color: #f1f7f1;
+    color: #000;
+    font-weight: bold;
+}
+.donate-button {
+  background-color: #000;
+  border: none;
+  padding: 20px 30px;
+  color: white;
+  font-size: 20px;
+  font-weight: 700; 
+  cursor: pointer;
+  border-radius: 10px; 
+  margin-right: 20px; 
+  margin-top: 10px; 
+}
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: left;
+    margin: 40px auto;
+    width: 90%;
+}
+.image-container {
+    width: 45%;
+    text-align: top;
+}
+.image-container img {
+    width: 100%;
+    border-radius: 20px;
+}
+.text-container {
+    width: 45%;
+    text-align: left;
+    line-height: 1.6;
+}
+.text-container h2 {
+    color: #2e7d32;
+    text-align: center;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f1f7f1;
+    color: #000;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+ul li {
+  margin-top: 15px; /* отступ сверху */
+  line-height: 1.6; /* для улучшения читаемости */
+}
+#logon-div {
+  background-color: #f1f7f1;
+  border-radius: 10px;
+  padding: 30px;
+  width: 50%;
+  margin: 40px auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+#logon-div form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+#logon-div label {
+  font-weight: bold;
+  color: #333;
+}
+#logon-div input[type="email"],
+#logon-div input[type="password"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+}
+#logon-div button {
+  padding: 10px;
+  border: none;
+  background-color: #d3e5d5;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#logon-div button:hover {
+    background-color: #4caf50; /* Цвет фона при наведении */
+}
+
+#logon-div button#logon-cancel {
+  background-color: #eeafaf;
+}
+#logon-div button#logon-cancel:hover {
+  background-color: #ff6666;
+}
+
+#logon-register {
+    display: none; /* Скрываем элемент по умолчанию */
+    text-align: center; /* Выравнивание текста по центру */
+    margin: 20px auto; /* Центрирование блока */
+    padding: 20px; /* Отступы вокруг блока */
+    background-color: rgba(255, 255, 255, 0.8); /* Фон с прозрачностью */
+    border-radius: 10px; /* Закругление углов */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень для блока */
+}
+
+#logon-register button {
+    background-color: #d3e5d5; /* Спокойный цвет фона кнопок */
+    color: #333; /* Цвет текста кнопок */
+    border: none; /* Убираем рамку */
+    padding: 10px 20px; /* Внутренние отступы кнопок */
+    font-size: 16px; /* Размер шрифта */
+    font-weight: bold; /* Жирный шрифт */
+    border-radius: 5px; /* Закругление углов кнопок */
+    cursor: pointer; /* Курсор в виде указателя при наведении */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
+    width: 200px; /* Ширина кнопок, чтобы они не занимали всю ширину */
+    margin: 10px 0; /* Отступы сверху и снизу для разделения кнопок */
+}
+
+#logon-register nav {
+    display: flex; /* Используем флекс-контейнер для кнопок */
+    flex-direction: column; /* Вертикальная компоновка кнопок */
+    align-items: center; /* Центрируем кнопки по горизонтали */
+    gap: 10px; /* Промежутки между кнопками */
+    justify-content: center; /* Центрируем навигацию по вертикали */
+    height: 100vh; /* Занимаем всю высоту страницы */
+}
+
+#logon-register button:hover {
+    background-color: #4caf50; /* Цвет фона при наведении */
+}
+
+/* Стили для форм регистрации */
+#register-div {
+    display: none; /* Скрываем элемент по умолчанию */
+    text-align: center; /* Выравнивание текста по центру */
+    margin: 40px auto; /* Центрирование блока */
+    width: 50%;
+    padding: 20px; /* Отступы вокруг блока */
+    background-color: #f1f7f1;; /* Фон с прозрачностью */
+    border-radius: 10px; /* Закругление углов */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень для блока */
+}
+
+/* Стили для формы внутри блока регистрации */
+#register-div form {
+    display: flex; /* Используем флекс-контейнер для формы */
+    flex-direction: column; /* Вертикальная компоновка */
+    align-items: center; /* Центрирование элементов */
+    gap: 15px; /* Промежутки между элементами */
+}
+
+/* Стили для кнопок в регистрации */
+#register-div button {
+    background-color: #d3e5d5; /* Спокойный цвет фона кнопок */
+    color: #333; /* Цвет текста кнопок */
+    border: none; /* Убираем рамку */
+    padding: 10px 20px; /* Внутренние отступы кнопок */
+    font-size: 16px; /* Размер шрифта */
+    font-weight: bold; /* Жирный шрифт */
+    border-radius: 5px; /* Закругление углов кнопок */
+    cursor: pointer; /* Курсор в виде указателя при наведении */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
+}
+
+#register-div button:hover {
+    background-color: #4caf50; /* Цвет фона при наведении */
+}
+
+/* Стили для списка назначений */
+#appointments {
+    display: none; /* Скрываем элемент по умолчанию */
+    text-align: center; /* Выравнивание текста по центру */
+    margin: 20px auto; /* Центрирование блока */
+    padding: 20px; /* Отступы вокруг блока */
+    background-color: rgba(255, 255, 255, 0.9); /* Фон с прозрачностью */
+    border-radius: 10px; /* Закругление углов */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень для блока */
+}
+
+#appointments h1 {
+    margin-bottom: 20px; /* Отступ снизу для заголовка */
+}
+
+/* Стили для таблицы назначений */
+#appointments-table {
+    width: 100%; /* Ширина таблицы на 100% */
+    margin-top: 10px; /* Отступ сверху */
+    border-collapse: collapse; /* Убираем пробелы между ячейками */
+}
+
+#appointments-table th,
+#appointments-table td {
+    padding: 10px; /* Внутренние отступы ячеек */
+    border: 1px solid #ccc; /* Граница ячеек */
+    text-align: left; /* Выравнивание текста по левому краю */
+}
+
+#appointments-table th {
+    background-color: #f1f7f1; /* Фон для заголовков таблицы */
+}
+
+/* Стили для блока редактирования назначений */
+#edit-appointment {
+    display: none; /* Скрываем элемент по умолчанию */
+    text-align: center; /* Выравнивание текста по центру */
+    margin: 20px auto; /* Центрирование блока */
+    padding: 20px; /* Отступы вокруг блока */
+    background-color: rgba(255, 255, 255, 0.9); /* Фон с прозрачностью */
+    border-radius: 10px; /* Закругление углов */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень для блока */
+}
+
+#edit-appointment form {
+    display: flex; /* Используем флекс-контейнер для формы */
+    flex-direction: column; /* Вертикальная компоновка */
+    align-items: center; /* Центрирование элементов */
+    gap: 15px; /* Промежутки между элементами */
+}
+
+#edit-appointment button {
+    background-color: #2e7d32; /* Цвет фона кнопок */
+    color: white; /* Цвет текста кнопок */
+    border: none; /* Убираем рамку */
+    padding: 10px 20px; /* Внутренние отступы кнопок */
+    font-size: 16px; /* Размер шрифта */
+    font-weight: bold; /* Жирный шрифт */
+    border-radius: 5px; /* Закругление углов кнопок */
+    cursor: pointer; /* Курсор в виде указателя при наведении */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
+}
+
+#edit-appointment button:hover {
+    background-color: #4caf50; /* Цвет фона при наведении */
+}
+
+#message {
+    background-color: #f8d7da; /* Цвет фона (светлый красный для ошибок) */
+    color: #721c24; /* Цвет текста (темно-красный для контрастности) */
+    border: 1px solid #f5c6cb; /* Рамка (светло-красная) */
+    padding: 10px; /* Внутренние отступы */
+    border-radius: 5px; /* Закругление углов */
+    margin: 20px auto; /* Отступы сверху и снизу, центрирование */
+    width: 80%; /* Ширина сообщения */
+    text-align: center; /* Центрируем текст */
+    display: none; /* Скрываем элемент по умолчанию, показываем при ошибках */
+    font-size: 16px; /* Размер шрифта */
+}

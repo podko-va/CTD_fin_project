@@ -11,7 +11,6 @@ const { BadRequestError, UnauthenticatedError } = require('../errors')
 
 const register = async (req, res) => {
     const { name, email, password, isPsychologist = false, isCoordinator = false, timezone = 'EDT', gender = 'unspecified' } = req.body;
-    
     try {
         const user = await User.create({
             name,
@@ -22,7 +21,6 @@ const register = async (req, res) => {
             timezone,
             gender
         });
-        
         const token = user.createJWT();
         
         res.status(StatusCodes.CREATED).json({
@@ -63,7 +61,7 @@ const decodeJWT = async (req,res) => {
     const { token } = req.body;
     const decodedUser = User.decodeJWT(token);
     if (decodedUser) {
-           res.status(200).json({ userId: decodedUser.userId, name: decodedUser.name });
+           res.status(200).json({ userId: decodedUser.userId, name: decodedUser.name, isPsychologist: decodedUser.isPsychologist });
        } else {
            res.status(401).json({ message: 'Invalid or expired token.' });
        }

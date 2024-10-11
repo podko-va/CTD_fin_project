@@ -15,7 +15,7 @@ import {
   let password1 = null;
   let password2 = null;
   let timezone = null;
-  let gender = null;
+  let gender = null;  
   
   export const handleRegister = () => {
     registerDiv = document.getElementById("register-div");
@@ -24,7 +24,8 @@ import {
     password1 = document.getElementById("password1");
     password2 = document.getElementById("password2");
     timezone = document.getElementById("timezone");
-    gender = document.getElementById("gender");
+    gender = document.getElementById("gender");    
+    const isPsychologist = document.getElementById("isPsychologist");
     const registerButton = document.getElementById("register-button");
     const registerCancel = document.getElementById("register-cancel");
   
@@ -35,7 +36,6 @@ import {
             message.textContent = "The passwords entered do not match.";
           } else {
             enableInput(false);
-  
             try {
               const response = await fetch("/api/v1/auth/register", {
                 method: "POST",
@@ -46,11 +46,11 @@ import {
                   name: name.value,
                   email: email1.value,
                   password: password1.value,
-                  timezone: timezone.value,
-                  gender: gender.value,
+                  isPsychologist: isPsychologist.checked,
+                  timezone: timezone.value || 'EDT',
+                  gender: gender.value || 'unspecified',
                 }),
               });
-  
               const data = await response.json();
               if (response.status === 201) {
                 message.textContent = `Registration successful.  Welcome ${data.user.name}`;
@@ -87,10 +87,11 @@ import {
     });
   };
   
-  export const showRegister = () => {
+  export const showRegister = (isP) => {
     email1.value = null;
     password1.value = null;
     password2.value = null;
+    isPsychologist.checked = isP;
     timezone.value = null;
     gender.value = null;
     setDiv(registerDiv);

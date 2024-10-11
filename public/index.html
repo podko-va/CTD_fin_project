@@ -1,20 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Appointments List</title>
-  </head>
+    <title>WarmEmbrace</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
 
-  <body>
-    <h1>Appointments List</h1>
-    <hr />
-    <p id="message"></p>
-    <hr />
+<body>
+    <div id="about" style="display:none;">
+      <header>
+          <nav>
+              <button id="letsTry">Let`s Try!</button>
+          </nav>
+      </header>
+      <p id="message"></p>
+        <h1 style="margin-left: 150px;margin-top: 50px;">
+        WarmEmbrace:<br>
+        <span style="margin-left: 150px;">Peaceful Pathways to Harmony.</span>
+        </h1>
+
+        <div class="container">
+            <div class="text-container">
+                <h2>About us</h2>
+                <p>WarmEmbrace is a group of enthusiastic psychologists. Each of us was once new in US and at a loss for the changes and challenges that relocation brings. At that moment, we could all use someone who understood what newcomers go through and could lend a helping hand.
+
+    Time heals and erodes all things, except the struggles of immigrants. We help people overcome these difficulties by providing support and understanding.
+    </p>
+                
+                <h2>Mission</h2>
+                <p>Our mission is to help you manage the ups and downs of life with immediate, empathetic, and confidential support. Think of us as your guide, here to help you when life gets tough!</p>
+                <h2>What can we provide for you?</h2>
+                <p>WarmEmbrace offers a support for everyone who needs assistance. Research shows that talking can alleviate pain, reduce anxiety, and combat depression.</p>
+            </div>
+
+            <div class="image-container">
+                <img src="./web3.jpg" alt="Tranquil Scene with Pathway" />
+            </div>
+        </div>
+
+        <div class="container">
+        <div class="text-container; width: 100%;" id="mission">
+            <h2 class="text-container">What We Teach</h2>
+            <ul>
+                <li>Understand common patterns of psychological crises and challenges faced by immigrants, the stages and outcomes of adaptation. You will realize you are not alone with your problems and learn what to expect next and how to cope.</li>
+                <li>Master techniques to deal with anxiety, apathy, fear of uncertainty, and feelings of helplessness related to immigration.</li>
+                <li>Learn how to continue being productive and avoid procrastination, even when everything becomes more challenging in a new country.</li>
+                <li>Discover how to stop constantly worrying about the past and future, and start enjoying the present.</li>
+                <li>Set long-term goals for your adaptation journey and follow them.</li>
+                <li>By the end of our program, each of you will have a personal adaptation plan with goals, life hacks, and techniques to handle difficulties and keep moving forward.</li>
+            </ul>
+            <h2>Our Promise</h2>
+                <p>We offer help to all people, regardless of gender. Our support is anonymous and follows the ethics of psychologists. Love, support, and self-care are as important as air.</p>
+            <h2>P.S. Let`s try. Two heads are better than one.</h2> 
+          </div>   
+        </div>
+    </div>
     <div id="logon-register" style="display:none;">
-      <button type="button" id="logon">logon</button>
-      <button type="button" id="register">register</button>
+      <nav>
+        <button type="button" id="return_about">About</button>
+        <button type="button" id="logon">logon</button>
+        <button type="button" id="register">register</button>
+        <button type="button" id="register_psychologist">register for psychologists</button>
+      </nav>
     </div>
     <div id="logon-div" style="display:none;">
       <form>
@@ -33,23 +82,23 @@
     <div id="register-div" style="display:none;">
       <form>
         <div>
-          <label for="name">name:</label>
+          <label for="name">Name:</label>
           <input type="text" id="name" />
         </div>
         <div>
-          <label for="email1">email:</label>
+          <label for="email1">Email:</label>
           <input type="email" id="email1" />
         </div>
         <div>
-          <label for="password1">password:</label>
+          <label for="password1">Password:</label>
           <input type="password" id="password1" />
         </div>
         <div>
-          <label for="password2">verify password:</label>
+          <label for="password2">Verify password:</label>
           <input type="password" id="password2" />
         </div>
         <div>
-          <label for="timezone">timezone (optional):</label>
+          <label for="timezone">Timezone (optional):</label>
           <select id="timezone">
             <option value="" selected disabled>Select your timezone</option>
             <option value="PDT">PDT</option>
@@ -63,7 +112,7 @@
           </select>
         </div>
         <div>
-          <label for="gender">gender (optional):</label>
+          <label for="gender">Gender (optional):</label>
           <select id="gender">
             <option value="" selected disabled>Select your gender</option>
             <option value="female">female</option>
@@ -71,18 +120,22 @@
             <option value="unspecified">prefer not to specify</option>
           </select>
         </div>
+        <div>
+          <input type="checkbox" id="isPsychologist" />
+          <label for="isPsychologist">Are you a psychologist?</label>
+        </div>
         <button type="button" id="register-button">register</button>
         <button type="button" id="register-cancel">cancel</button>
       </form>
     </div>
     <div id="appointments" style="display:none;">
+      <h1>Appointments List</h1>
       <p id="appointments-message"></p>
       <table id="appointments-table">
         <tr id="appointments-table-header">
           <th>Date</th>
           <th>Time</th>
           <th>Patient</th>
-          <th>Psychologist</th>
           <th>Status</th>
           <th colspan="2"></th>
         </tr>
@@ -132,5 +185,8 @@
       </form>
     </div>
     <script src="./index.js" type="module"></script>
+    <footer>
+      <p>&copy; 2024 Kate Po. All rights reserved.</p>
+    </footer>
   </body>
 </html>

@@ -163,8 +163,9 @@ ul li {
     flex-direction: column; /* Вертикальная компоновка кнопок */
     align-items: center; /* Центрируем кнопки по горизонтали */
     gap: 10px; /* Промежутки между кнопками */
-    justify-content: center; /* Центрируем навигацию по вертикали */
+    justify-content: flex-start; /* Центрируем навигацию по вертикали */
     height: 100vh; /* Занимаем всю высоту страницы */
+    margin-top: 20px; 
 }
 
 #logon-register button:hover {

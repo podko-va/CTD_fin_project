@@ -13,6 +13,14 @@ let addingAppointment = null;
 export const handleAddEditAppointment = () => {
   addEditDiv = document.getElementById("edit-appointment");
   appointmentDate = document.getElementById("date");
+  appointmentDate.addEventListener("blur", function() {
+    const errorMessage = validateDate(this.value);
+    if (errorMessage) {
+        message.textContent = errorMessage;
+        console.log(errorMessage);
+        this.value = "";
+    } 
+});
   appointmentTime = document.getElementById("time");
   timezone = document.getElementById("timezone");
   psychologist = document.getElementById("psychologist");
@@ -20,8 +28,8 @@ export const handleAddEditAppointment = () => {
   description = document.getElementById("description");
   addingAppointment = document.getElementById("adding-appointment");
   const editCancel = document.getElementById("edit-cancel");
-
   
+    
   addEditDiv.addEventListener("click", async (e) => {
     if (inputEnabled && e.target.nodeName === "BUTTON") {
       if (e.target === addingAppointment) {
@@ -39,8 +47,6 @@ export const handleAddEditAppointment = () => {
         const decodedUser = await response.json();
         if (decodedUser) {
             console.log(`User ID: ${decodedUser.userId}, Name: ${decodedUser.name}`);
-            message.textContent = decodedUser.name;
-            //console.log(decodedUser.isPsychologist);
           } else {
             console.log('Invalid or expired token.');
           }
@@ -48,11 +54,10 @@ export const handleAddEditAppointment = () => {
         let method = "POST";
         let url = "/api/v1/appointments";
 
-        if (addingAppointment.textContent === "update") {
+        if (addingAppointment.textContent === "Update") {
           method = "PATCH";
           url = `/api/v1/appointments/${addEditDiv.dataset.id}`;
         }
-        console.log(patientEmail.value);
         try {
           const response = await fetch(url, {
             method: method,
@@ -68,8 +73,6 @@ export const handleAddEditAppointment = () => {
               description: description.value,
             }),
           });
-          console.log(combineDateAndTime(appointmentDate.value,appointmentTime.value));
-          console.log(appointmentDate.value);
           const data = await response.json();
           if (response.status === 200 || response.status === 201) {
             if (response.status === 200) {
@@ -113,11 +116,11 @@ export const showAddEditAppointment = async (appointmentId) => {
     description.value = "";
     addingAppointment.textContent = "add";
     message.textContent = "";
-
-    setDiv(addEditDiv);
+    
+    setDiv(addEditDiv);    
   } else {
     enableInput(false);
-
+    
     try {
       const response = await fetch(`/api/v1/appointments/${appointmentId}`, {
         method: "GET",
@@ -129,14 +132,14 @@ export const showAddEditAppointment = async (appointmentId) => {
 
       const data = await response.json();
       if (response.status === 200) {
+        console.log(isPsychologist);
         appointmentDate.value = new Date(data.appointment.date).toISOString().slice(0, 10);
         appointmentTime.value = new Date(data.appointment.date).toTimeString().slice(0,5);
         timezone.value = data.appointment.timezone;
-        psychologist.value = data.appointment.psychologist;
+        psychologist.value = isPsychologist ? "you" : data.appointment.psychologist;
         patientEmail.value = data.appointment.patientEmail || "";
         description.value = data.appointment.description || "";
-        addingAppointment.textContent = "update";
-        message.textContent = "";
+        addingAppointment.textContent = "Update";
         addEditDiv.dataset.id = appointmentId;
 
         setDiv(addEditDiv);
@@ -155,11 +158,39 @@ export const showAddEditAppointment = async (appointmentId) => {
 };
 
 function combineDateAndTime(dateValue, timeValue) {
-  const dateObj = new Date(dateValue);
-  const [hours, minutes] = timeValue.split(':');
   
-  dateObj.setHours(parseInt(hours, 10));
-  dateObj.setMinutes(parseInt(minutes, 10));
+  const dateTimeString = `${dateValue}T${timeValue}:00`;
+
+  const dateObj  = new Date(`${dateTimeString}-07:00`);
   
-  return dateObj.toISOString();
+  console.log(dateObj);
+  const options = {
+    timeZone: 'America/Los_Angeles',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  };  
+  return dateObj.toLocaleString('en-US', options);  
 };
+
+//валидация
+function validateDate(date) {
+  console.log("date",date);
+  const currentDate = new Date();
+  const selectedDate = new Date(date);
+  const twoYearsFromNow = new Date();
+  twoYearsFromNow.setFullYear(currentDate.getFullYear() + 2);
+
+  if (selectedDate < currentDate) {
+      console.log("selectedDate:",selectedDate);
+      return "Error: The selected date is in the past. Please choose a future date.";
+  } else if (selectedDate > twoYearsFromNow) {
+      return "Error: The selected date is more than 2 years in the future. Please choose a more realistic date.";
+  }
+  return "";
+  }
+
+

@@ -42,6 +42,7 @@ export const setToken = (value) => {
 };
 
 export let message = null;
+export let listAppMessage = null;
 
 // import { showJobs, handleJobs } from "./jobs.js";
 // import { showLoginRegister, handleLoginRegister } from "./loginRegister.js";
@@ -58,7 +59,10 @@ import { handleRegister } from "./register.js";
 document.addEventListener("DOMContentLoaded", () => {
   token = localStorage.getItem("token");
   isPsychologist = localStorage.getItem("isPsychologist");
+
   message = document.getElementById("message");
+  listAppMessage = document.getElementById("appointments-message");
+  
   handleLoginRegisterIni();
   handleLoginRegister();
   handleLogin();

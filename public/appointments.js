@@ -88,7 +88,7 @@ import {
             let rowHTML = `
             <td>${new Date(data.appointments[i].date).toLocaleDateString(undefined, { timeZone: "UTC" })}</td>
             <td>${new Date(data.appointments[i].date).toTimeString().slice(0, 8)}</td>
-            ${isPsychologist ? `<td>${data.appointments[i].patient || ""}</td>` : ``} 
+            ${isPsychologist ? `<td>${data.appointments[i].patientEmail || ""}</td>` : ``} 
             ${isPsychologist ? `` : `<td>${data.appointments[i].psychologist.name || ""}</td>`}
             <td>${data.appointments[i].status || 'N/A'}</td>
             ${isPsychologist ? `<div>${editButton}${deleteButton}</div>` : ``}`

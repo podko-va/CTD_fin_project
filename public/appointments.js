@@ -2,6 +2,7 @@ import {
     inputEnabled,
     setDiv,
     message,
+    listAppMessage,
     setToken,
     token,
     isPsychologist,
@@ -19,6 +20,7 @@ import {
     appointmentsDiv = document.getElementById("appointments");
     const logoff = document.getElementById("logoff");
     const addAppointment = document.getElementById("add-appointment");
+    const appMessage = document.getElementById("appointments-message");
     appointmentsTable = document.getElementById("appointments-table");
     appointmentsTableHeader = document.getElementById("appointments-table-header");
   
@@ -36,6 +38,7 @@ import {
           showAddEditAppointment(e.target.dataset.id);
         } else if (e.target.classList.contains("deleteButton")) {
           message.textContent = "You deleted one appointment.";
+          //appMessage.textContent = "You deleted one appointment.";
           deleteAppointment(e.target.dataset.id);
           showAppointments();
         }
@@ -44,7 +47,8 @@ import {
   };
   
   export const showAppointments = async () => {
-    const addAppointment = document.getElementById("add-appointment");    
+    const addAppointment = document.getElementById("add-appointment"); 
+    const appMessage = document.getElementById("appointments-message");   
     try {
       enableInput(false);
       const response = await fetch("/api/v1/appointments", {
@@ -86,17 +90,16 @@ import {
             let editButton = `<td><button type="button" class="editButton" data-id=${data.appointments[i]._id}>edit</button></td>`;
             let deleteButton = `<td><button type="button" class="deleteButton" data-id=${data.appointments[i]._id}>delete</button></td>`;
             let rowHTML = `
-            <td>${new Date(data.appointments[i].date).toLocaleDateString(undefined, { timeZone: "UTC" })}</td>
+            <td>${new Date(data.appointments[i].date).toLocaleDateString()}</td>
             <td>${new Date(data.appointments[i].date).toTimeString().slice(0, 8)}</td>
-            ${isPsychologist ? `<td>${data.appointments[i].patient || ""}</td>` : ``} 
+            ${isPsychologist ? `<td>${data.appointments[i].patientEmail || ""}</td>` : ``} 
             ${isPsychologist ? `` : `<td>${data.appointments[i].psychologist.name || ""}</td>`}
             <td>${data.appointments[i].status || 'N/A'}</td>
             ${isPsychologist ? `<div>${editButton}${deleteButton}</div>` : ``}`
             rowEntry.innerHTML = rowHTML;
             children.push(rowEntry);
           }          
-          appointmentsTable.replaceChildren(...children);
-          console.log(isPsychologist);          
+          appointmentsTable.replaceChildren(...children);          
         }
       } else {
         message.textContent = data.msg;

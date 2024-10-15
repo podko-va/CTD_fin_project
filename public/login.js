@@ -19,7 +19,19 @@ import {
     password = document.getElementById("password");
     const logonButton = document.getElementById("logon-button");
     const logonCancel = document.getElementById("logon-cancel");
-  
+    
+    password.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+              // Имитируем нажатие на кнопку
+              logonButton.click();
+            }
+          });
+        
+    logonButton.addEventListener("click", () => {
+            // Здесь вы можете добавить логику для обработки нажатия кнопки
+            console.log("Logon button clicked");
+          });
+
     loginDiv.addEventListener("click", async (e) => {
       if (inputEnabled && e.target.nodeName === "BUTTON") {
         if (e.target === logonButton) {

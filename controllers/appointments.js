@@ -30,7 +30,7 @@ const createAppointment = async (req,res) => {
 
 const updateAppointment = async (req,res) => {
     const {
-        body:{date,timezone,psychologist,description},
+        body:{date,timezone,psychologist,description,patientEmail},
         params:{id:appointmentId}
     } = req
     
@@ -39,7 +39,7 @@ const updateAppointment = async (req,res) => {
     }
     const appointment = await Appointment.findOneAndUpdate(
         {_id:appointmentId, psychologist:psychologist},
-        {date,timezone,description},
+        {date,timezone,description,patientEmail},
         {new: true, runValidators: true}
     )
     if (!appointment) {

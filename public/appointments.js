@@ -69,6 +69,7 @@ import {
           appointmentsTable.replaceChildren(...children);
           appointmentsTable.style.display = 'none'; 
           message.textContent = "No appointments found."; 
+          if (isPsychologist==false) {addAppointment.style.display = 'none';}
         } else {
           // var thirdHeader = appointmentsTableHeader.getElementsByTagName("th")[2];
           // if (isPsychologist) {

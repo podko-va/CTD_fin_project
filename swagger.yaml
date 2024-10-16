@@ -1,111 +1,18 @@
 openapi: 3.0.0
 info:
-  title: job API
+  title: Appointments API
   contact: {}
   version: '1.0'
 servers:
 - url: https://zero6-jobs-api-08192024.onrender.com/api/v1
   variables: {}
 paths:
-  /auth/register:
-    post:
+  /appointments/{id}:
+    delete:
       tags:
-      - Auth
-      summary: register user
-      operationId: registeruser
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              allOf:
-              - $ref: '#/components/schemas/registeruserrequest'
-              - example:
-                  name: anna5
-            example:
-              name: anna5
-        required: true
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-      security: []
-  /auth/login:
-    post:
-      tags:
-      - Auth
-      summary: login user
-      operationId: loginuser
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              allOf:
-              - $ref: '#/components/schemas/loginuserrequest'
-              - example:
-                  email: anna5@gmail.com
-                  password: secret
-            example:
-              email: anna5@gmail.com
-              password: secret
-        required: true
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-      security: []
-  /jobs:
-    post:
-      tags:
-      - Jobs
-      summary: Create the job
-      operationId: Createthejob
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              allOf:
-              - $ref: '#/components/schemas/jobsrequest'
-              - example:
-                  company: Google
-                  position: QA
-            example:
-              company: Google
-              position: QA
-        required: true
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-      security:
-      - bearer: []
-    get:
-      tags:
-      - Jobs
-      summary: Get all jobs
-      operationId: Getalljobs
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-      security:
-      - bearer: []
-  /jobs/{id}:
-    get:
-      tags:
-      - Jobs
-      summary: Get one jobs
-      operationId: Getonejobs
+      - Appointment
+      summary: PROD_delete one appointment
+      operationId: PROD_deleteoneappointment
       parameters:
       - name: id
         in: path
@@ -123,9 +30,9 @@ paths:
       - bearer: []
     patch:
       tags:
-      - Jobs
-      summary: Update one jobs
-      operationId: Updateonejobs
+      - Appointment
+      summary: PROD_update one appointment
+      operationId: PROD_updateoneappointments
       parameters:
       - name: id
         in: path
@@ -139,11 +46,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateJobRequest'
-            example:
-              company: random
-              position: intern
-        required: true    
+              allOf:
+              - $ref: '#/components/schemas/PROD_updateoneappointmentsRequest'
+              - {}
+        required: true
       responses:
         '200':
           description: ''
@@ -151,11 +57,28 @@ paths:
       deprecated: false
       security:
       - bearer: []
-    delete:
+    parameters: []
+  /appoinments:
+    get:
       tags:
-      - Jobs
-      summary: Delete one jobs
-      operationId: Deleteonejobs
+      - Appointment
+      summary: PROD_Get all appointments
+      operationId: PROD_Getallappointments
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    parameters: []
+  /appointments/{id}}:
+    get:
+      tags:
+      - Appointment
+      summary: PROD_Get one appointment
+      operationId: PROD_Getoneappointment
       parameters:
       - name: id
         in: path
@@ -171,34 +94,86 @@ paths:
       deprecated: false
       security:
       - bearer: []
+    parameters: []
+  /appointments:
+    post:
+      tags:
+      - Appointment
+      summary: PROD_appointments
+      operationId: PROD_appointments
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/PROD_appointments_Request'
+              - {}
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    parameters: []
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: PROD_login user
+      operationId: PROD_loginuser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/PROD_loginuserRequest'
+            example:
+              email: anna10@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+    parameters: []
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: PROD register user
+      operationId: PRODregisteruser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/PRODregisteruserRequest'
+            example:
+              name: anna5
+              email: anna5@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+    parameters: []
 components:
   schemas:
-    registeruserrequest:
-      title: registeruserrequest
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-      example:
-        name: anna5
-    loginuserrequest:
-      title: loginuserrequest
-      required:
-      - email
-      - password
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-      example:
-        email: anna5@gmail.com
-        password: secret
-    jobsrequest:
-      title: jobsrequest
+    PROD_updateoneappointmentsRequest:
+      title: PROD_updateoneappointmentsRequest
       required:
       - company
       - position
@@ -208,30 +183,49 @@ components:
           type: string
         position:
           type: string
-      example:
-        company: Google
-        position: QA
-    UpdateJobRequest:
-      title: UpdateJobRequest
+    PROD_loginuserRequest:
+      title: PROD_loginuserRequest
       required:
-        - company
-        - position
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    PRODregisteruserRequest:
+      title: PRODregisteruserRequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    PROD_appointments_Request:
+      title: PROD_appointments_Request
+      required:
+      - company
+      - position
       type: object
       properties:
         company:
           type: string
         position:
           type: string
-      example:
-        company: random
-        position: intern
   securitySchemes:
     bearer:
       type: http
       scheme: bearer
 security: []
 tags:
-- name: Auth
+- name: Appointment
   description: ''
-- name: Jobs
+- name: Auth
   description: ''

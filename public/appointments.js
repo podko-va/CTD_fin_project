@@ -47,8 +47,9 @@ import {
   };
   
   export const showAppointments = async () => {
-    const addAppointment = document.getElementById("add-appointment"); 
-    const appMessage = document.getElementById("appointments-message");   
+    const addAppointment = document.getElementById("add-appointment");
+    console.log("isPsychologist", isPsychologist);
+    console.log("addAppointment-beg", addAppointment); 
     try {
       enableInput(false);
       const response = await fetch("/api/v1/appointments", {
@@ -75,7 +76,8 @@ import {
           // } else {
           // thirdHeader.textContent = "Psychologist";
           // }
-          if (!isPsychologist) {
+          console.log("isPsychologist", isPsychologist);
+          if (isPsychologist==false) {
             appointmentsTableHeader.innerHTML = `
             <th>Date</th>
             <th>Time</th>

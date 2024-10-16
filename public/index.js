@@ -27,17 +27,20 @@ function parseJwt(token) {
 }
 
 export let token = null;
-export let isPsychologist = false;
+export let isPsychologist = localStorage.getItem("isPsychologist") || null;
+
 export const setToken = (value) => {
   token = value;
   if (value) {
     localStorage.setItem("token", value);
     const decoded = parseJwt(token);
+    console.log("isPsychologist", decoded.isPsychologist);
     isPsychologist = decoded.isPsychologist
     localStorage.setItem("isPsychologist",decoded.isPsychologist);
   } else {
     localStorage.removeItem("token");
     localStorage.removeItem("isPsychologist");
+    console.log("isPsychologist", isPsychologist);
   }
 };
 
@@ -58,11 +61,11 @@ import { handleRegister } from "./register.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   token = localStorage.getItem("token");
-  isPsychologist = localStorage.getItem("isPsychologist");
+  //isPsychologist = localStorage.getItem("isPsychologist");
 
   message = document.getElementById("message");
   listAppMessage = document.getElementById("appointments-message");
-  
+
   handleLoginRegisterIni();
   handleLoginRegister();
   handleLogin();

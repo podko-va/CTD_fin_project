@@ -19,7 +19,7 @@ The Front is a row `HTML` and `JS`.`React` Front coming soon.
 
 ## Links
 
-- The URL: Link (deployed at Render)
+- The URL: Link (deployed at Render) https://zero6-jobs-api-08192024.onrender.com/
 
 ## ENV file structure
 
@@ -54,9 +54,9 @@ The user interface is the front end for full stack applications, or the EJS view
 - [x] All CRUD operations for each of the data models besided the User model are supported.
 - [x] Links or buttons should be provided to help the users navigate the application.
 - [x] Style your application. Again, this is not the focus, so keep it simple until you have done everything else.
-- [x] Deployment         
+- [x] Deployment  https://zero6-jobs-api-08192024.onrender.com/       
 - [x] Include security protections for your application. Include security packages like xss-clean and helmet, appropriately configured.
-- [x] Deploy the application to Render.com.  [DEPLOY Link]
+- [x] Deploy the application to Render.com.  [https://zero6-jobs-api-08192024.onrender.com/]
 
 **Bonus Items (these are entirely optional)**
 - [x] Do something extra: 

@@ -46,7 +46,7 @@ Create a Node/Express application from scratch using the MongoDB database. It mu
 - [x] Implement access control logic in your controllers, so that one user can’t access another user’s data. This logic must be present for every controller operation or your application is not secure.
 - [ ] Include appropriate notifications to the user. For full stack applications, the messages should be returned as needed with the API. (For some APIs, the HTTP status code suffices.) Then the front end displays the message or messages to the user. For server side rendered applications, you need to store the message in the user session, perhaps using the connect-flash NPM package.
 - [x] Implement error handling middleware so that all exceptions and error conditions are handled and so that the user gets user friendly messages for each event.
-- [ ] Use best practices in the organization of application code and in indentation. You may want to use eslint and prettier to make sure your code complies.
+- [x] Use best practices in the organization of application code and in indentation. You may want to use eslint and prettier to make sure your code complies.
 
 **User Interface**
 The user interface is the front end for full stack applications, or the EJS views for server side rendered applications. In either case, the UI should have these capabilities:
@@ -54,16 +54,16 @@ The user interface is the front end for full stack applications, or the EJS view
 - [x] All CRUD operations for each of the data models besided the User model are supported.
 - [x] Links or buttons should be provided to help the users navigate the application.
 - [x] Style your application. Again, this is not the focus, so keep it simple until you have done everything else.
-- [ ] Deployment         
-- [ ] Include security protections for your application. Include security packages like xss-clean and helmet, appropriately configured.
-- [ ] Deploy the application to Render.com.  [DEPLOY Link]
+- [x] Deployment         
+- [x] Include security protections for your application. Include security packages like xss-clean and helmet, appropriately configured.
+- [x] Deploy the application to Render.com.  [DEPLOY Link]
 
 **Bonus Items (these are entirely optional)**
-- [ ] Do something extra: 
+- [x] Do something extra: 
 
 > - more complicated data model
 > - additional NPM packages
 > - callouts to other public APIs - cloudinary 
 
-- [ ] Implement some test cases using Mocha, Chai, and Puppeteer.
-- [ ] For full stack applications, implement Swagger to document the API.
+- [x] Implement some test cases using Mocha, Chai, and Puppeteer.
+- [x] For full stack applications, implement Swagger to document the API.

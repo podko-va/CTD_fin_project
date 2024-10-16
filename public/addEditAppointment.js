@@ -161,7 +161,7 @@ function combineDateAndTime(dateValue, timeValue) {
   
   const dateTimeString = `${dateValue}T${timeValue}:00`;
 
-  const dateObj  = new Date(`${dateTimeString}-07:00`);
+  const dateObj  = new Date(`${dateTimeString}-08:00`);
   
   console.log(dateObj);
   const options = {

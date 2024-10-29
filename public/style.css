@@ -8,11 +8,17 @@ body {
 }
 header {
     background-color: #f1f7f1;
-    padding: 20px 10px; 
+    padding: 30px 10px; 
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 50px;
+}
+.header-title {
+    text-align: center; /* Center the text */
+    margin: 50px 0;    /* Margin at the top and bottom */
+    margin-left: 30px; 
+    font-size: 2em;     /* Adjust the font size as needed */
 }
 header nav {
     margin-left: 20px;
@@ -72,14 +78,18 @@ nav a {
 }
 .text-container h2 {
     color: #2e7d32;
-    text-align: center;
+    margin: 30px 0;
+}
+h2 {
+    color: #2e7d32; /* Задаем цвет заголовков h2 */
+    margin: 40px 0; /* Добавляем отступы для заголовков h2 */
 }
 footer {
     text-align: center;
     padding: 20px;
     background-color: #f1f7f1;
     color: #000;
-    position: fixed;
+    position: relative;
     bottom: 0;
     width: 100%;
 }
@@ -209,6 +219,28 @@ ul li {
     background-color: #4caf50; /* Цвет фона при наведении */
 }
 
+#register-group {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.register-btn {
+    width: 80px; /* Размер иконок */
+    height: 80px;
+    cursor: pointer;
+    transition: transform 0.2s; /
+}
+
+.register-btn:hover {
+    transform: scale(1.1); 
+}
+
 /* Стили для списка назначений */
 #appointments {
     display: none; /* Скрываем элемент по умолчанию */
@@ -225,20 +257,20 @@ ul li {
 }
 
 /* Стили для таблицы назначений */
-#appointments-table {
+#appointments-table, empty-appointments-table {
     width: 100%; /* Ширина таблицы на 100% */
     margin-top: 10px; /* Отступ сверху */
     border-collapse: collapse; /* Убираем пробелы между ячейками */
 }
 
-#appointments-table th,
-#appointments-table td {
+#appointments-table th,empty-appointments-table th
+#appointments-table td, empty-appointments-table td {
     padding: 10px; /* Внутренние отступы ячеек */
     border: 1px solid #ccc; /* Граница ячеек */
     text-align: left; /* Выравнивание текста по левому краю */
 }
 
-#appointments-table th {
+#appointments-table th, empty-appointments-table th {
     background-color: #f1f7f1; /* Фон для заголовков таблицы */
 }
 
@@ -277,9 +309,7 @@ ul li {
 }
 
 #message {
-    background-color: #f8d7da; /* Цвет фона (светлый красный для ошибок) */
     color: #721c24; /* Цвет текста (темно-красный для контрастности) */
-    border: 1px solid #f5c6cb; /* Рамка (светло-красная) */
     padding: 10px; /* Внутренние отступы */
     border-radius: 5px; /* Закругление углов */
     margin: 20px auto; /* Отступы сверху и снизу, центрирование */

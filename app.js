@@ -21,6 +21,7 @@ const connectDB = require('./db/connect')
 //routers
 const authRouter = require('./routes/auth')
 const AppointmentsRouter = require('./routes/appointment')
+const AdminRouter = require('./routes/admin')
 
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
@@ -57,6 +58,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/appointments', authenticateUser, AppointmentsRouter)
+app.use('/api/v1/admin', AdminRouter)
 
 
 // app.get('/', (req, res) => {

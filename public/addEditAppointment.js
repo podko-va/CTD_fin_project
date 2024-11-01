@@ -63,15 +63,17 @@ export const handleAddEditAppointment = () => {
               date: combineDateAndTime(appointmentDate.value, appointmentTime.value),
               timezone: timezone.value,
               description: description.value,
-              patientEmail: patientEmail.value || null
+              patientEmail: patientEmail.value || null,
           };      
           
-          if (isPsychologist === 1) {
+          if (isPsychologist === "true") {
               bodyContent.psychologist = decodedUser.userId;
+              bodyContent.psychologistName = decodedUser.name;
           } else {
               bodyContent.patient = decodedUser.userId;
               bodyContent.psychologist = null;
-          };      
+          }; 
+          
           const response = await fetch(url, {
               method: method,
               headers: {
@@ -95,7 +97,6 @@ export const handleAddEditAppointment = () => {
             psychologist.value = "";
             patientEmail.value = "";
             description.value = "";
-
             showAppointments();
           } else {
             message.textContent = data.msg;
@@ -108,6 +109,7 @@ export const handleAddEditAppointment = () => {
         enableInput(true);
       } else if (e.target === editCancel) {
         message.textContent = "";
+
         showAppointments();
       }
     }
@@ -140,11 +142,10 @@ export const showAddEditAppointment = async (appointmentId) => {
 
       const data = await response.json();
       if (response.status === 200) {
-        console.log(isPsychologist);
         appointmentDate.value = new Date(data.appointment.date).toISOString().slice(0, 10);
         appointmentTime.value = new Date(data.appointment.date).toTimeString().slice(0,5);
         timezone.value = data.appointment.timezone;
-        psychologist.value = isPsychologist ? "you" : data.appointment.psychologist;
+        psychologist.value = data.appointment.psychologistName == null && isPsychologist === "true" ? "you" : (data.appointment.psychologist || "");
         patientEmail.value = data.appointment.patientEmail || "";
         description.value = data.appointment.description || "";
         addingAppointment.textContent = "Update";

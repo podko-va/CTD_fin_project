@@ -72,14 +72,25 @@ const port = process.env.PORT || 3000;
 
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_URI)
-
+    
+    let url = process.env.MONGO_URI;
+    // if (process.env.NODE_ENV == "test") {
+    //   url = process.env.MONGO_URI_TEST;
+    // }
+    console.log("process.env.NODE_ENV",process.env.NODE_ENV);
+    await connectDB(url);
+    
     app.listen(port, () =>
       console.log(`Server is listening on port ${port}...`)
     );
+    
   } catch (error) {
     console.log(error);
   }
 };
+module.exports = app;
+//if (process.env.NODE_ENV !== 'test') {
+  start();
+//}
 
-start();
+

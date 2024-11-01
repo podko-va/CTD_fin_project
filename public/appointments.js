@@ -11,13 +11,15 @@ import {
   import { showLoginRegister } from "./loginRegister.js";
   import { showAddEditAppointment } from "./addEditAppointment.js";
   import { deleteAppointment } from "./deleteAppointment.js";
+
   
   let appointmentsDiv = null;
   let appointmentsTable = null;
   let appointmentsTableHeader = null;
   let emptyappointmentsTable = null;
   let emptyappointmentsTableHeader = null;
-    
+  let emptyappointmentsTableSection = null;
+
   export const handleAppointments = () => {
     appointmentsDiv = document.getElementById("appointments");
     const logoff = document.getElementById("logoff");
@@ -27,6 +29,7 @@ import {
     emptyappointmentsTable = document.getElementById("empty-appointments-table");
     appointmentsTableHeader = document.getElementById("appointments-table-header");
     emptyappointmentsTableHeader = document.getElementById("empty-appointments-table-header");
+    emptyappointmentsTableSection = document.getElementById("empty-appointments");
   
     appointmentsDiv.addEventListener("click", (e) => {
       if (inputEnabled && e.target.nodeName === "BUTTON") {
@@ -53,115 +56,112 @@ import {
   
   export const showAppointments = async () => {
     const addAppointment = document.getElementById("add-appointment");
-    console.log("isPsychologist", isPsychologist);
-    console.log("addAppointment-beg", addAppointment); 
+    let children = [appointmentsTableHeader];
+  
     try {
       enableInput(false);
-      const response = await fetch("/api/v1/appointments", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
   
-      const data = await response.json();
-      let children = [appointmentsTableHeader];
-      if (response.status === 200) {
-
-
-        if (data.count === 0) {
+      // Выполняем оба запроса параллельно
+      const [appointmentsResponse, adminResponse] = await Promise.all([
+        fetch("/api/v1/appointments", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+        isPsychologist === "true"
+          ? fetch("/api/v1/admin", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+          : Promise.resolve(null), // Заглушка для отсутствия запроса
+      ]);
+  
+      // Проверяем ответы по каждому из запросов
+      if (appointmentsResponse.ok) {
+        const appointmentsData = await appointmentsResponse.json();
+  
+        // Параметры интерфейса, когда данные назначений получены
+        if (appointmentsData.count === 0) {
           appointmentsTable.replaceChildren(...children);
-          appointmentsTable.style.display = 'none'; 
-          message.textContent = "No appointments found."; 
-          if (isPsychologist==false) {addAppointment.style.display = 'none';}
-        } else {
-          // var thirdHeader = appointmentsTableHeader.getElementsByTagName("th")[2];
-          // if (isPsychologist) {
-          // thirdHeader.textContent = "Patient";
-          // } else {
-          // thirdHeader.textContent = "Psychologist";
-          // }
-          console.log("isPsychologist", isPsychologist);
-          if (isPsychologist==false) {
-            appointmentsTableHeader.innerHTML = `
-            <th>Date</th>
-            <th>Time</th>
-            <th>Psychologist</th>
-            <th>Status</th>
-            `;            
-            children = [appointmentsTableHeader];
-            addAppointment.style.display = 'none';
+          appointmentsTable.style.display = "none";
+          message.textContent = "No appointments found.";
+          if (isPsychologist === "false") {
+            addAppointment.textContent = "Request for consultation";
           }
-          for (let i = 0; i < data.appointments.length; i++) {
-            let rowEntry = document.createElement("tr");  
-            let editButton = `<td><button type="button" class="editButton" data-id=${data.appointments[i]._id}>edit</button></td>`;
-            let deleteButton = `<td><button type="button" class="deleteButton" data-id=${data.appointments[i]._id}>delete</button></td>`;
+        } else {
+          if (isPsychologist === "false") {
+            appointmentsTableHeader.innerHTML = `
+              <th>Date</th>
+              <th>Time</th>
+              <th>Psychologist</th>
+              <th>Status</th>
+              <th colspan="2"></th>
+              <th colspan="3"></th>`;
+            addAppointment.textContent = "Request for consultation";
+          }
+  
+          appointmentsData.appointments.forEach((appointment) => {
+            let rowEntry = document.createElement("tr");
+            let editButton = `<td><button type="button" class="editButton" data-id=${appointment._id}>edit</button></td>`;
+            let deleteButton = `<td><button type="button" class="deleteButton" data-id=${appointment._id}>delete</button></td>`;
             let rowHTML = `
-            <td>${new Date(data.appointments[i].date).toLocaleDateString()}</td>
-            <td>${new Date(data.appointments[i].date).toTimeString().slice(0, 8)}</td>
-            ${isPsychologist ? `<td>${data.appointments[i].patientEmail || ""}</td>` : ``} 
-            ${isPsychologist ? `` : `<td>${data.appointments[i].psychologist.name || ""}</td>`}
-            <td>${data.appointments[i].status || 'N/A'}</td>
-            ${isPsychologist ? `<div>${editButton}${deleteButton}</div>` : `<div>${editButton}</div>`}`
+              <td>${new Date(appointment.date).toLocaleDateString()}</td>
+              <td>${new Date(appointment.date).toTimeString().slice(0, 8)}</td>
+              ${isPsychologist === "true" ? `<td>${appointment.patientEmail || ""}</td>` : `<td>${appointment.psychologistName || ""}</td>`}
+              <td>${appointment.status || "N/A"}</td>
+              <div>${editButton}${deleteButton}</div>`;
             rowEntry.innerHTML = rowHTML;
             children.push(rowEntry);
-          }          
-          appointmentsTable.replaceChildren(...children);          
+          });
+          appointmentsTable.replaceChildren(...children);
         }
       } else {
-        message.textContent = data.msg;
+        message.textContent = "Error fetching appointments.";
       }
-    } catch (err) {
-      console.log(err);
-      message.textContent = "A communication error occurred.";
-    }
-
-
-    try {
-      enableInput(false);
-      const response = await fetch("/api/v1/admin", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        },
-      });
-      if (isPsychologist==false) {
-        emptyappointmentsTable.style.display = 'none';
-        emptyappointmentsTableHeader = 'none';
+  
+      // Обрабатываем данные администратора, если пользователь - психолог
+      if (isPsychologist === "true" && adminResponse && adminResponse.ok) {
+        const adminData = await adminResponse.json();
+        let emptyChildren = [emptyappointmentsTableHeader];
+  
+        if (adminData.count === 0) {
+          emptyappointmentsTable.replaceChildren(...emptyChildren);
+          emptyappointmentsTable.style.display = "none";
+          emptyappointmentsTableSection.style.display = "none";
+        } else {
+          adminData.appointments.forEach((appointment) => {
+            let rowEntry = document.createElement("tr");
+            let editButton = `<td><button type="button" class="editButton" data-id=${appointment._id}>accept</button></td>`;
+            let rowHTML = `
+              <td>${new Date(appointment.date).toLocaleDateString()}</td>
+              <td>${new Date(appointment.date).toTimeString().slice(0, 8)}</td>
+              <td>${appointment.patientEmail || ""}</td>
+              <td>${appointment.status || "N/A"}</td>
+              <div>${editButton}</div>`;
+            rowEntry.innerHTML = rowHTML;
+            emptyChildren.push(rowEntry);
+          });
+          emptyappointmentsTable.replaceChildren(...emptyChildren);
+        }
       }
       else{
-        const data = await response.json();
-        let children = [emptyappointmentsTableHeader];
-        if (response.status === 200) {
-          if (data.count === 0) {
-            emptyappointmentsTable.replaceChildren(...children);
-            emptyappointmentsTable.style.display = 'none'; 
-          } else {          
-          for (let i = 0; i < data.appointments.length; i++) {
-            let rowEntry = document.createElement("tr");  
-            let editButton = `<td><button type="button" class="editButton" data-id=${data.appointments[i]._id}>edit</button></td>`;
-            let rowHTML = `
-            <td>${new Date(data.appointments[i].date).toLocaleDateString()}</td>
-            <td>${new Date(data.appointments[i].date).toTimeString().slice(0, 8)}</td>
-            <td>${data.appointments[i].patientEmail || ""}</td>
-            <td>${""}</td>
-            <td>${data.appointments[i].status || 'N/A'}</td>
-            <div>${editButton}</div></div>`
-            rowEntry.innerHTML = rowHTML;
-            children.push(rowEntry);
-          }          
-          emptyappointmentsTable.replaceChildren(...children);          
-        }
-        } else {
-          message.textContent = data.msg;
-        }
-      }
+        if (isPsychologist === "false") {
+          emptyappointmentsTable.style.display = 'none';
+          emptyappointmentsTableHeader.style.display = 'none';
+          emptyappointmentsTableSection.style.display = "none";
+        };
+      };
+  
     } catch (err) {
-      console.log(err);
+      console.log("Error:", err);
       message.textContent = "A communication error occurred.";
+    } finally {
+      enableInput(true);
+      setDiv(appointmentsDiv); // Обновляем отображаемый div только после завершения всех запросов
     }
-    enableInput(true);
-    setDiv(appointmentsDiv);
   };
   

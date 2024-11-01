@@ -47,11 +47,6 @@ export const setToken = (value) => {
 export let message = null;
 export let listAppMessage = null;
 
-// import { showJobs, handleJobs } from "./jobs.js";
-// import { showLoginRegister, handleLoginRegister } from "./loginRegister.js";
-// import { handleLogin } from "./login.js";
-// import { handleAddEdit } from "./addEdit.js";
-// import { handleRegister } from "./register.js";
 import { showAppointments, handleAppointments } from "./appointments.js";
 import { showLoginRegister, handleLoginRegister, showLoginIni, handleLoginRegisterIni } from "./loginRegister.js";
 import { handleLogin } from "./login.js";
@@ -61,8 +56,6 @@ import { handleRegister } from "./register.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   token = localStorage.getItem("token");
-  //isPsychologist = localStorage.getItem("isPsychologist");
-
   message = document.getElementById("message");
   listAppMessage = document.getElementById("appointments-message");
 

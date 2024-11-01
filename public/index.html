@@ -15,10 +15,9 @@
               <button id="letsTry">Let`s Try!</button>
           </nav>
       </header>
-        <h1 style="margin-left: 150px;margin-top: 50px;">
-        WarmEmbrace:<br>
-        <span style="margin-left: 150px;">Peaceful Pathways to Harmony.</span>
-        </h1>
+      <h1 class="header-title">
+        WarmEmbrace. Your Peaceful Pathways to Harmony.
+      </h1>
 
         <div class="container">
             <div class="text-container">
@@ -61,7 +60,7 @@
         <button type="button" id="return_about">About</button>
         <button type="button" id="logon">logon</button>
         <button type="button" id="register">register</button>
-        <button type="button" id="register_psychologist">register for psychologists</button>
+        <!-- <button type="button" id="register_psychologist">register for psychologists</button> -->
       </nav>
     </div>
     <div id="logon-div" style="display:none;">
@@ -119,7 +118,7 @@
             <option value="unspecified">prefer not to specify</option>
           </select>
         </div>
-        <div style="display: none;">
+        <div>
           <input type="checkbox" id="isPsychologist" />
           <label for="isPsychologist">Are you a psychologist?</label>
         </div>
@@ -141,6 +140,18 @@
         </tr>
       </table>
       <button type="button" id="add-appointment">Add Appointment</button>
+      <div id="empty-appointments">
+        <h1>Consultation Request List</h1>
+        <table id="empty-appointments-table">
+          <tr id="empty-appointments-table-header">
+            <th>Date</th>
+            <th>Time</th>
+            <th>Patient</th>
+            <th colspan="2"></th>
+            <th colspan="3"></th>
+          </tr>
+        </table>        
+      </div>
       <button type="button" id="logoff">Log Off</button>
     </div>    
     <div id="edit-appointment" style="display:none;">

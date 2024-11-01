@@ -87,11 +87,11 @@ import {
     });
   };
   
-  export const showRegister = (isP) => {
+  export const showRegister = () => {//(isP) => {
     email1.value = null;
     password1.value = null;
     password2.value = null;
-    isPsychologist.checked = isP;
+    isPsychologist.checked = null;//isP;
     timezone.value = null;
     gender.value = null;
     setDiv(registerDiv);

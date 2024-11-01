@@ -25,7 +25,11 @@ const AppointmentSchema = new mongoose.Schema({
     psychologist: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
-        required: [true, 'Please provide the psychologist'],
+        required: [false, 'Please provide the psychologist'],
+    },
+    psychologistName: {
+        type: String,
+        required: [false, 'Please provide the psychologist`s name'],
     },
     description: {
         type: String,
@@ -72,7 +76,21 @@ AppointmentSchema.pre('save', async function (next) {
             return next(err); // Если ошибка, передаем ее в следующий middleware
         }
     }
+    if (this.patient) {
+        try {
+            const user = await User.findOne({ _id: this.patient });
+            if (user) {
+                this.patientEmail = user.email; // Если пользователь найден, присваиваем его ID полю patient
+            } else {
+                throw new Error('Patient not found with the provided id');
+            }
+        } catch (err) {
+            return next(err); // Если ошибка, передаем ее в следующий middleware
+        }
+    }
+    
     next(); // Переход к следующему middleware или сохранению
+
 });
 // Хук для поиска пациента по email перед обновлением записи
 AppointmentSchema.pre('findOneAndUpdate', async function (next) {
@@ -93,7 +111,9 @@ AppointmentSchema.pre('findOneAndUpdate', async function (next) {
             return next(err); // Если ошибка, передаем ее в следующий middleware
         }
     }
-
+    
     next(); // Переход к следующему middleware или выполнению обновления
 });
+
+
 module.exports = mongoose.model('Appointment', AppointmentSchema);

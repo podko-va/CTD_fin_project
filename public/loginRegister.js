@@ -19,7 +19,7 @@ export const handleLoginRegister = () => {
   loginRegisterDiv = document.getElementById("logon-register");
   const login = document.getElementById("logon");
   const register = document.getElementById("register");
-  const register_p = document.getElementById("register_psychologist");
+  // const register_p = document.getElementById("register_psychologist");
   loginRegisterDiv.addEventListener("click", (e) => {
     if (inputEnabled && e.target.nodeName === "BUTTON") {
       if (e.target === login) {
